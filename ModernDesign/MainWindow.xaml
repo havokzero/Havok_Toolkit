@@ -1,0 +1,145 @@
+﻿<Window x:Class="ModernDesign.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModernDesign"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        mc:Ignorable="d"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        Title="Themed by HaVok!" Height="642" Width="800">
+
+    <!-- Window Background -->
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF1E1E1E" Offset="0"/>
+            <GradientStop Color="#FF3C3C3C" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <!-- Window Resources -->
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+
+    <!-- Main Grid Layout -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="63*"/>
+            <ColumnDefinition Width="337*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Tab Control -->
+        <TabControl x:Name="MyTabControl" TabStripPlacement="Left" Grid.ColumnSpan="2">
+            <!-- Home Tab -->
+            <TabItem Header="Home">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Canvas Margin="20" Width="600" Height="600">
+                        <!-- Elements inside Home Tab -->
+                        <TextBlock Text="Welcome to HaVok's Toolkit" 
+                                   FontWeight="Bold" FontSize="20"
+                                   Canvas.Left="10" Canvas.Top="10"/>
+                        <TextBlock Text="Your one-stop solution for encryption and username searches" 
+                                   FontSize="16" 
+                                   Canvas.Left="10" Canvas.Top="40" Width="280" TextWrapping="Wrap"/>
+                        <Button Content="Quick Start Guide" 
+                                  Canvas.Left="10" Canvas.Top="147" Width="200" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <Button Content="Username Search"
+                                Canvas.Left="10" Canvas.Top="184" Width="200" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <TextBlock Text="Latest Updates" FontWeight="Bold" FontSize="16" 
+                                   Canvas.Left="406" Canvas.Top="250" Width="120"/>
+                        <TextBlock Text="Update info here..." FontSize="14" TextWrapping="Wrap" 
+                                   Canvas.Left="406" Canvas.Top="285" Width="120" Height="40"/>
+                        <Button Content="Go to Encrypt" 
+                                Canvas.Left="10" Canvas.Top="240" Width="200"/>
+                        <Button Content="Go to Decrypt" 
+                                Canvas.Left="10" Canvas.Top="280" Width="200"/>
+                        <Image Source="Images/HavokBrick.jpg" Stretch="Fill" 
+                               Canvas.Left="300" Canvas.Top="10" Width="226" Height="225"/>
+                    </Canvas>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Search Tab -->
+            <TabItem Header="Search">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!-- Elements inside Search Tab -->
+                    <StackPanel Grid.Row="0">
+                        <TextBox x:Name="UsernameTextBox" Margin="5" Width="400"/>
+                        <WrapPanel>
+                            <Button Content="Start" Margin="5" Width="100"/>
+                            <Button Content="Stop" Margin="5" Width="100"/>
+                        </WrapPanel>
+                        <TextBlock Text="Username Search" Margin="5"/>
+                    </StackPanel>
+                    <TextBox x:Name="ResultsTextBox" Grid.Row="1" Margin="5" IsReadOnly="True"
+                             Text="Results will appear here..." VerticalScrollBarVisibility="Auto"/>
+                </Grid>
+            </TabItem>
+
+            <!-- Info Tab -->
+            <TabItem Header="Info">
+                <Grid>
+                    <!-- TextBlock for displaying info -->
+                    <TextBlock Text="Info" VerticalAlignment="Top" Margin="10,10,678,0" Height="25"/>
+                    <!-- MediaElement to display the GIF -->
+                    <MediaElement Source="Images/ripplespin.gif" Stretch="Fill"
+                        Width="205" Height="205"
+                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                        LoadedBehavior="Play" MediaEnded="OnMediaEnded"/>
+                </Grid>
+            </TabItem>
+
+            <!-- Encrypt Tab -->
+            <TabItem Header="Encrypt">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!-- Elements inside Encrypt Tab -->
+                    <ComboBox x:Name="EncryptSelectionBox" Grid.Row="0" Margin="0,10,0,0" Width="400" HorizontalAlignment="Center">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" FontFamily="Consolas" FontSize="14"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <StackPanel Grid.Row="1" Margin="5"/>
+                    <TextBox x:Name="EncryptionResultsTextBox" Grid.Row="2" Margin="5,191,5,5" IsReadOnly="True"
+                             Text="Encryption results will appear here..." VerticalScrollBarVisibility="Auto"/>
+                    <Button Content="Start" Width="100" Margin="606,71,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+                    <TextBox x:Name="EncryptInputBox" Margin="165,33,165,421" Grid.Row="2"/>
+                </Grid>
+            </TabItem>
+
+            <!-- Decrypt Tab -->
+            <TabItem Header="Decrypt">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!-- Elements inside Decrypt Tab -->
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Text="Decrypt encrypted text here" Margin="5"/>
+                        <TextBox x:Name="DecryptInputBox" Margin="5" Width="400" Height="72"/>
+                        <Button Content="Start" Margin="5" Width="100"/>
+                    </StackPanel>
+                    <TextBox x:Name="DecryptionOutputTextBox" Grid.Row="1" Margin="5,83,5,5" IsReadOnly="True"
+                             Text="Decryption results will appear here..."/>
+                </Grid>
+            </TabItem>
+
+            <!-- About Tab -->
+            <TabItem Header="About">
+                <TextBlock Text="About" Width="716"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
